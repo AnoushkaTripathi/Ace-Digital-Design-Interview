@@ -1,0 +1,44 @@
+module siso_design(
+input clk,
+input x,
+output q
+);
+wire w1, w2, w3;
+wire t1, t2;
+
+d_ff dut3(.clk(clk), .d(x), .q(w1));
+xor_gate u1(.a(x), .b(w3), .y(t1));
+d_ff dut2(.clk(clk), .d(t1), .q(w2));
+d_ff dut1(.clk(clk), .d(t2), .q(w3));
+d_ff dut0(.clk(clk), .d(w3), .q(q));
+not_gate u2(.a(q), .y(t2));
+
+endmodule
+
+// D Flip Flop
+module d_ff (
+input d, // Data input
+input clk, // clock input
+output q); // output Q
+always @(posedge clk)
+begin
+q <= d;
+end
+endmodule
+
+// XOR gate
+module xor_gate (
+input a,
+input b,
+output y
+);
+assign y = a ^ b;
+endmodule
+
+// NOT gate
+module not_gate (
+input a,
+output y
+);
+assign y = ~a;
+endmodule
